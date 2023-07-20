@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: imagina-rollouts
+spec:
+  replicas: 5
+  strategy:
+    canary:
+      stableMetadata:
+        labels:
+          role: stable
+          version: blue
+      canaryMetadata:
+        labels:
+          role: canary
+          version: yellow
+      steps:
+      - setWeight: 20
+      - pause: {duration: 20}
+      - analysis:
+          templates:
+          - templateName: canary-check
+      - setWeight: 40
+      - pause: {duration: 20}
+      - analysis:
+          templates:
+          - templateName: success-rate
+          args:
+          - name: ingress
+            value: imagina-ingress
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: imagina-rollouts
+  template:
+    metadata:
+      labels:
+        app: imagina-rollouts
+        version: yellow
+    spec:
+      containers:
+      - name: imagina-rollouts
+        image: argoproj/rollouts-demo:green
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            memory: 32Mi
+            cpu: 5m

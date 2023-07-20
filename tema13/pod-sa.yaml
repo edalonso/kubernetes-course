@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  serviceAccount: imagina-tema13
+  containers:
+  - name: nginx
+    image: nginx

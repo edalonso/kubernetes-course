@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-enrutador
+  labels:
+    app: mi-enrutador
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: mi-enrutador
+  template:
+    metadata:
+      labels:
+        app: mi-enrutador
+    spec:
+      containers:
+      - name: enrutador
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+

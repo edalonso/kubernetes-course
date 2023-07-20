@@ -1,0 +1,11 @@
+apiVersion: "stable.imagina.io/v1alpha1"
+kind: Database
+metadata:
+  name: my-new-database-object
+spec:
+  image: my-awesome-db-process-image
+  ip: 192.168.1.2
+  user: my-db-user
+  password: my-db-password
+  table: billing-table
+  column: money-column

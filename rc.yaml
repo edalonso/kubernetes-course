@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mi-enrutador
+spec:
+  replicas: 3
+  selector:
+    app: mi-enrutador
+  template:
+    metadata:
+      name: mi-enrutador
+      labels:
+        app: mi-enrutador
+    spec:
+      containers:
+      - name: enrutador
+        image: nginx:1.21
+        ports:
+        - containerPort: 80

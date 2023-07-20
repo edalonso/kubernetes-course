@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  repo_token_name: YXJnby13b3JrZmxvdy1qZW5raW5z
+  repo_token_value: Z2xwYXQtS1p6VnNyb1ZEN2tkVjdZWlpDb1I=
+kind: Secret
+metadata:
+  name: gitlab-argo-push-dev
+  namespace: argo-events
+type: Opaque

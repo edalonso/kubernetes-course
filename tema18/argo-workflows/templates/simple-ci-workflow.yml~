@@ -1,0 +1,85 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: simple-ci-workflow
+spec:
+  templates:
+  - name: git-clone
+    inputs:
+      parameters:
+      - name: repo
+      - name: branch
+      - name: working_dir
+    script:
+      image: makocchi/alpine-git-curl-jq
+      workingDir: /work/{{ inputs.parameters.working_dir }}
+      command: [sh]
+      source: git clone --depth 1 --single-branch --branch {{ inputs.parameters.branch }} https://{{ inputs.parameters.repo }} .
+      volumeMounts:
+        - mountPath: /work
+          name: work
+  - name: exec-command
+    inputs:
+      parameters:
+      - name: exec_command
+    script:
+      image: makocchi/alpine-git-curl-jq
+      workingDir: /work
+      command: [sh]
+      source: "{{ inputs.parameters.exec_command }}"
+      volumeMounts:
+        - mountPath: /work
+          name: work
+  - name: push-image
+    inputs:
+      parameters:
+      - name: container_image
+      - name: container_tag
+      - name: registry_credentials
+      - name: context_subpath
+    container:
+      image: gcr.io/kaniko-project/executor:debug
+      command: [/kaniko/executor]
+      args:
+      - --context=dir:///work
+      - --context-sub-path={{ inputs.parameters.context_subpath }}
+      - --destination={{ inputs.parameters.container_image }}:{{ inputs.parameters.container_tag }}
+      volumeMounts:
+        - name: "{{ inputs.parameters.registry_credentials }}"
+          mountPath: /kaniko/.docker/
+        - mountPath: /work
+          name: work
+  - name: uid
+    inputs:
+      parameters:
+      - name: globaluid
+    container:
+      image: golang:1.18.3
+      command: [sh, -c]
+      args: ["sleep 1; tr -dc A-Za-z0-9 </dev/urandom | head -c 64 > /tmp/random_text.txt"]
+    outputs:
+      parameters:
+      - name: uid
+        valueFrom:
+          path: /tmp/random_text.txt
+        globalName: "{{ inputs.parameters.globaluid }}"
+  - name: git-push
+    inputs:
+      parameters:
+      - name: repo_token_value
+      - name: repo
+      - name: branch
+      - name: registry_url
+      - name: registry_subpath
+      - name: project_name
+      - name: image_id
+      - name: working_dir
+    script:
+      image: golang:1.18.3
+      workingDir: /work/{{ inputs.parameters.working_dir }}
+      command: [sh]
+      source: |
+        sed -i 's/image: .*/image: {{ inputs.parameters.registry_url }}\/{{ inputs.parameters.registry_subpath }}\/{{ inputs.parameters.project_name }}:{{ inputs.parameters.image_id }}/' app*.yml && git config --global user.email jenkinsdisa@disashop && git add *.yml && git commit -m "chore(argo): deploy new image of project {{ inputs.parameters.project_name }} version {{ inputs.parameters.image_id }}" && git push https://{{ inputs.parameters.repo_token_value }}@{{ inputs.parameters.repo }}
+      volumeMounts:
+        - mountPath: /work
+          name: work

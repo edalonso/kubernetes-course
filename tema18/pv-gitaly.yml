@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: repo-data-gitlab-gitaly-0
+  labels:
+    app: gitaly
+    release: gitlab
+spec:
+  storageClassName: "gitaly"
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    name: repo-data-gitlab-gitaly-0
+    namespace: custom-metrics
+  nfs:
+    server: 192.168.1.148
+    path: "/home/usuario/gitlab/gitaly"

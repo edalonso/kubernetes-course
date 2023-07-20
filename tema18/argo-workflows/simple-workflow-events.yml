@@ -1,0 +1,108 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook-create-ci-open-merge-main
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: create-ci
+      eventSourceName: webhook
+      eventName: create-ci
+  triggers:
+    - template:
+        name: webhook-create-ci-workflow-trigger
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: push-image-
+                labels:
+                  repo: repo-name
+                  env: pre
+              spec:
+                entrypoint: full-ci-management
+                serviceAccountName: argo
+                volumes:
+                - name: kaniko-secret-dev
+                  secret:
+                    secretName: regcred
+                    items:
+                      - key: .dockerconfigjson
+                        path: config.json
+                - name: work
+                  persistentVolumeClaim:
+                    claimName: argo-workflow-pvc
+                imagePullSecrets:
+                - name: regcred
+                arguments:
+                  parameters:
+                  - name: message
+                    value: hello world
+                  - name: project_name
+                    value: flask-app
+                  - name: git_url
+                    value: github.com/edalonso/flask-service
+                  - name: source_branch
+                    value: main
+                  - name: uniq_string
+                    value: test
+                templates:
+                - name: full-ci-management
+                  inputs:
+                    parameters:
+                    - name: message
+                    - name: project_name
+                    - name: git_url
+                    - name: source_branch
+                    - name: uniq_string
+                  dag:
+                    tasks:
+                    - name: generate-uid
+                      templateRef:
+                        name: simple-ci-workflow
+                        template: uid
+                      arguments:
+                        parameters:
+                        - name: globaluid
+                          value: my-uid
+                    - name: checkout-git-repository
+                      templateRef:
+                        name: simple-ci-workflow
+                        template: git-clone
+                      arguments:
+                        parameters:
+                        - name: repo
+                          value: "{{ inputs.parameters.git_url }}"
+                        - name: branch
+                          value: "{{ inputs.parameters.source_branch }}"
+                        - name: working_dir
+                          value: "{{ tasks.generate-uid.outputs.parameters.uid }}/repo"
+                      depends: generate-uid.Succeeded
+                    - name: create-container
+                      templateRef:
+                        name: simple-ci-workflow
+                        template: push-image
+                      arguments:
+                        parameters:
+                        - name: container_image
+                          value: dcr.disastack.com/disashop/{{ inputs.parameters.project_name }}
+                        - name: container_tag
+                          value: "{{ tasks.generate-uid.outputs.parameters.uid }}"
+                        - name: registry_credentials
+                          value: kaniko-secret-dev
+                        - name: context_subpath
+                          value: "/{{ tasks.generate-uid.outputs.parameters.uid }}/repo/"
+                      depends: "checkout-git-repository.Succeeded"
+                    - name: clean-workspace
+                      templateRef:
+                        name: simple-ci-workflow
+                        template: exec-command
+                      arguments:
+                        parameters:
+                        - name: exec_command
+                          value: "mv /work/{{ tasks.generate-uid.outputs.parameters.uid }} /tmp/"
+                      depends: create-container.Succeeded || create-container.Failed

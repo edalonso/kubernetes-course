@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rook-ceph-mon
+    app.kubernetes.io/component: cephclusters.ceph.rook.io
+    app.kubernetes.io/created-by: rook-ceph-operator
+    app.kubernetes.io/instance: c
+    app.kubernetes.io/managed-by: rook-ceph-operator
+    app.kubernetes.io/name: ceph-mon
+    app.kubernetes.io/part-of: rook-ceph
+    ceph_daemon_id: c
+    ceph_daemon_type: mon
+    mon: c
+    mon_cluster: rook-ceph
+    rook.io/operator-namespace: rook-ceph
+    rook_cluster: rook-ceph
+  name: rook-ceph-mon-c
+  namespace: rook-ceph
+  ownerReferences:
+  - apiVersion: ceph.rook.io/v1
+    kind: CephCluster
+    name: rook-ceph
+    uid: 169991cf-ca2a-4834-8a8e-fef6ad9231fe
+  resourceVersion: "4726355"
+  uid: ddf26d88-6e36-4700-a86c-72065d5f9680
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: tcp-msgr1
+    port: 6789
+    protocol: TCP
+    targetPort: 31789
+  - name: tcp-msgr2
+    port: 3300
+    protocol: TCP
+    targetPort: 31300
+  selector:
+    app: rook-ceph-mon
+    ceph_daemon_id: c
+    mon: c
+    mon_cluster: rook-ceph
+    rook_cluster: rook-ceph
+  sessionAffinity: None
+  type: NodePort

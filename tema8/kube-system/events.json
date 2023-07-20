@@ -1,0 +1,306 @@
+{
+    "kind": "EventList",
+    "apiVersion": "v1",
+    "metadata": {
+        "resourceVersion": "4239927"
+    },
+    "items": [
+        {
+            "metadata": {
+                "name": "coredns-565d847f94-5pwk2.17279a8ab3146ac2",
+                "namespace": "kube-system",
+                "uid": "ffd77ff9-f43d-473f-910e-0723a95d4f4c",
+                "resourceVersion": "4239703",
+                "creationTimestamp": "2022-11-15T00:28:42Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "coredns-565d847f94-5pwk2",
+                "uid": "54575f18-825e-4a00-b57d-a54fbff0700e",
+                "apiVersion": "v1",
+                "resourceVersion": "3902451"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:27Z",
+            "lastTimestamp": "2022-11-16T00:04:11Z",
+            "count": 1130,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "coredns-565d847f94-pvr52.17279a89f36bee7d",
+                "namespace": "kube-system",
+                "uid": "5a02ba92-9464-486e-8099-801ed590a29e",
+                "resourceVersion": "4239768",
+                "creationTimestamp": "2022-11-15T00:28:38Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "coredns-565d847f94-pvr52",
+                "uid": "6632cc36-b3c3-46c8-9704-142b8e7abe0d",
+                "apiVersion": "v1",
+                "resourceVersion": "3902431"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:24Z",
+            "lastTimestamp": "2022-11-16T00:04:33Z",
+            "count": 1125,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "etcd-master1.17279a880e3405d7",
+                "namespace": "kube-system",
+                "uid": "3a84b1ed-dc9a-429e-af5b-72819e0575bb",
+                "resourceVersion": "4239745",
+                "creationTimestamp": "2022-11-15T00:28:25Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "etcd-master1",
+                "uid": "0ec8935218a15843571a85b86dc81c41",
+                "apiVersion": "v1"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:16Z",
+            "lastTimestamp": "2022-11-16T00:04:25Z",
+            "count": 1135,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-apiserver-master1.17279a880e698ca0",
+                "namespace": "kube-system",
+                "uid": "3e0324a6-36c6-4d41-af52-0afeb4075be6",
+                "resourceVersion": "4239710",
+                "creationTimestamp": "2022-11-15T00:28:26Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-apiserver-master1",
+                "uid": "2696595ebb6d8ba927a2f5bd9b24c250",
+                "apiVersion": "v1"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:16Z",
+            "lastTimestamp": "2022-11-16T00:04:13Z",
+            "count": 1131,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-controller-manager-master1.17279a880f86f48f",
+                "namespace": "kube-system",
+                "uid": "20f2ea61-c71b-4dd0-9259-71c4c451de1d",
+                "resourceVersion": "4239647",
+                "creationTimestamp": "2022-11-15T00:28:27Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-controller-manager-master1",
+                "uid": "f94bc2bbbd41f70214972525a646d3c5",
+                "apiVersion": "v1"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:16Z",
+            "lastTimestamp": "2022-11-16T00:03:50Z",
+            "count": 1139,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-proxy-rs82w.17279a89dd53d63a",
+                "namespace": "kube-system",
+                "uid": "af2803cb-ad7f-47af-a527-2a4f79657873",
+                "resourceVersion": "4239622",
+                "creationTimestamp": "2022-11-15T00:28:37Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-proxy-rs82w",
+                "uid": "59fbec90-7cda-4ea5-a7de-9903779e94c3",
+                "apiVersion": "v1",
+                "resourceVersion": "3902413"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:23Z",
+            "lastTimestamp": "2022-11-16T00:03:42Z",
+            "count": 1126,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-proxy-zl2tw.17279a8c39b9156e",
+                "namespace": "kube-system",
+                "uid": "133a4e6a-6ff9-4f0e-bc08-871a6bd9c54c",
+                "resourceVersion": "4239642",
+                "creationTimestamp": "2022-11-15T00:28:38Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-proxy-zl2tw",
+                "uid": "5926ff6b-9a0e-4bea-8699-675dc05f8cc6",
+                "apiVersion": "v1",
+                "resourceVersion": "3902847"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 100.100.1.1 100.90.1.1 192.168.1.1",
+            "source": {
+                "component": "kubelet",
+                "host": "worker2"
+            },
+            "firstTimestamp": "2022-11-15T00:28:34Z",
+            "lastTimestamp": "2022-11-16T00:03:49Z",
+            "count": 1125,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-proxy-zqmww.17279a8ebbcd3813",
+                "namespace": "kube-system",
+                "uid": "c1e74df0-f7f1-4a5a-a5c3-972e661027b7",
+                "resourceVersion": "4239740",
+                "creationTimestamp": "2022-11-15T00:28:44Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-proxy-zqmww",
+                "uid": "8a1e7a5f-ee8c-46f2-b720-a1bda5239916",
+                "apiVersion": "v1",
+                "resourceVersion": "3902661"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 100.100.1.1 100.90.1.1 192.168.1.1",
+            "source": {
+                "component": "kubelet",
+                "host": "worker1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:44Z",
+            "lastTimestamp": "2022-11-16T00:04:23Z",
+            "count": 1127,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "kube-scheduler-master1.17279a880ee04062",
+                "namespace": "kube-system",
+                "uid": "b2d63daf-0bf4-44c9-88e6-6e91d89b0e7a",
+                "resourceVersion": "4239595",
+                "creationTimestamp": "2022-11-15T00:28:26Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "kube-scheduler-master1",
+                "uid": "8f38eb8cb19608532351efe6b6858124",
+                "apiVersion": "v1"
+            },
+            "reason": "DNSConfigForming",
+            "message": "Nameserver limits were exceeded, some nameservers have been omitted, the applied nameserver line is: 8.8.8.8 2a0c:5a80:0:2::1 2a0c:5a84:0:2::1",
+            "source": {
+                "component": "kubelet",
+                "host": "master1"
+            },
+            "firstTimestamp": "2022-11-15T00:28:16Z",
+            "lastTimestamp": "2022-11-16T00:03:32Z",
+            "count": 1331,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        },
+        {
+            "metadata": {
+                "name": "metrics-server-5c6467864f-kqsbv.17279cafe4993616",
+                "namespace": "kube-system",
+                "uid": "1bff1cb3-0078-4ff8-92c1-20022b58eaa8",
+                "resourceVersion": "4239441",
+                "creationTimestamp": "2022-11-15T01:07:46Z"
+            },
+            "involvedObject": {
+                "kind": "Pod",
+                "namespace": "kube-system",
+                "name": "metrics-server-5c6467864f-kqsbv",
+                "uid": "94b18fe5-da9f-42d9-bc53-ed5ff9cd9fa6",
+                "apiVersion": "v1",
+                "resourceVersion": "4016533",
+                "fieldPath": "spec.containers{metrics-server}"
+            },
+            "reason": "Unhealthy",
+            "message": "Readiness probe failed: HTTP probe failed with statuscode: 500",
+            "source": {
+                "component": "kubelet",
+                "host": "worker2"
+            },
+            "firstTimestamp": "2022-11-15T01:07:46Z",
+            "lastTimestamp": "2022-11-16T00:02:36Z",
+            "count": 9349,
+            "type": "Warning",
+            "eventTime": null,
+            "reportingComponent": "",
+            "reportingInstance": ""
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cm-adapter-serving-certs
+data:
+  serving.crt: 
+  serving.key: 

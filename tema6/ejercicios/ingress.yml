@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+  name: ingress-no-subpath
+spec:
+  rules:
+  - host: tema6-ingress.imagina.k8s.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: imagina-world
+            port: 
+              number: 80
+        pathType: Prefix
+        path: /(.*)

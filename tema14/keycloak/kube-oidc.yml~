@@ -1,0 +1,21 @@
+oidc:
+  clientId: kube-oidc-proxy
+  issuerUrl: http://imagina.k8s.org:31808/auth/realms/k8s-management
+  usernameClaim: sub
+
+extraArgs:
+  v: 10
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  hosts:
+    - host: https://www.k8s.org
+      paths:
+        - /
+  tls:
+    - secretName: oidc-proxy-tls
+      hosts:
+        - kube.ssotest.staging.talkingquickly.co.uk

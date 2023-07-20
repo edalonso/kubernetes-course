@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  default.conf: "server {\r\n    listen       82;\r\n    listen  [::]:82;\r\n    server_name
+    \ localhost;\r\n\r\n    #access_log  /var/log/nginx/host.access.log  main;\r\n\r\n
+    \   location / {\r\n        root   /usr/share/nginx/html;\r\n        index  index.html
+    index.htm;\r\n    }\r\n\r\n    #error_page  404              /404.html;\r\n\r\n
+    \   # redirect server error pages to the static page /50x.html\r\n    #\r\n    error_page
+    \  500 502 503 504  /50x.html;\r\n    location = /50x.html {\r\n        root   /usr/share/nginx/html;\r\n
+    \   }\r\n\r\n    # proxy the PHP scripts to Apache listening on 127.0.0.1:80\r\n
+    \   #\r\n    #location ~ \\.php$ {\r\n    #    proxy_pass   http://127.0.0.1;\r\n
+    \   #}\r\n\r\n    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000\r\n
+    \   #\r\n    #location ~ \\.php$ {\r\n    #    root           html;\r\n    #    fastcgi_pass
+    \  127.0.0.1:9000;\r\n    #    fastcgi_index  index.php;\r\n    #    fastcgi_param
+    \ SCRIPT_FILENAME  /scripts$fastcgi_script_name;\r\n    #    include        fastcgi_params;\r\n
+    \   #}\r\n\r\n    # deny access to .htaccess files, if Apache's document root\r\n
+    \   # concurs with nginx's one\r\n    #\r\n    #location ~ /\\.ht {\r\n    #    deny
+    \ all;\r\n    #}\r\n}\r\n\r\n"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: nginx
+  namespace: tema12

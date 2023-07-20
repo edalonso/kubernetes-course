@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tema5-ej1
+  labels:
+    app: label1
+    tier: label2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: selector1
+  template:
+    metadata:
+      name: tema5-ej1
+      labels:
+        app: selector1
+    spec:
+      containers:
+      - name: tema5-ej1
+        image: nginx:1.21
+        ports:
+        - containerPort: 80

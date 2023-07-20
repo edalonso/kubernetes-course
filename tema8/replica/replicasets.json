@@ -1,0 +1,83 @@
+{
+    "kind": "ReplicaSetList",
+    "apiVersion": "apps/v1",
+    "metadata": {
+        "resourceVersion": "4239931"
+    },
+    "items": [
+        {
+            "metadata": {
+                "name": "frontend",
+                "namespace": "replica",
+                "uid": "e17af7bd-2b7c-4e84-b948-96bb3f105ca3",
+                "resourceVersion": "4016741",
+                "generation": 2,
+                "creationTimestamp": "2022-10-25T19:55:44Z",
+                "labels": {
+                    "app": "wordpress",
+                    "tier": "frontend"
+                },
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"ReplicaSet\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"wordpress\",\"tier\":\"frontend\"},\"name\":\"frontend\",\"namespace\":\"replica\"},\"spec\":{\"replicas\":3,\"selector\":{\"matchExpressions\":[{\"key\":\"tier\",\"operator\":\"In\",\"values\":[\"frontend\"]}],\"matchLabels\":{\"app\":\"wordpress\",\"tier\":\"frontend\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"wordpress\",\"tier\":\"frontend\"}},\"spec\":{\"containers\":[{\"image\":\"wordpress\",\"name\":\"wordpress\",\"ports\":[{\"containerPort\":80}]}]}}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "app": "wordpress",
+                        "tier": "frontend"
+                    },
+                    "matchExpressions": [
+                        {
+                            "key": "tier",
+                            "operator": "In",
+                            "values": [
+                                "frontend"
+                            ]
+                        }
+                    ]
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "wordpress",
+                            "tier": "frontend"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "wordpress",
+                                "image": "wordpress",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "replicas": 1,
+                "fullyLabeledReplicas": 1,
+                "readyReplicas": 1,
+                "availableReplicas": 1,
+                "observedGeneration": 2
+            }
+        }
+    ]
+}

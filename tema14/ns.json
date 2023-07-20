@@ -1,0 +1,60 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"creationTimestamp\":\"2022-12-14T10:30:01Z\",\"deletionTimestamp\":\"2022-12-22T01:24:50Z\",\"labels\":{\"kubernetes.io/metadata.name\":\"tema14\"},\"name\":\"tema14\",\"resourceVersion\":\"6149743\",\"uid\":\"a2e92992-e0fd-4c4e-bcf7-3237fa594f2f\"},\"spec\":{\"finalizers\":null},\"status\":{\"conditions\":[{\"lastTransitionTime\":\"2022-12-22T01:24:55Z\",\"message\":\"Discovery failed for some groups, 3 failing: unable to retrieve the complete list of server APIs: custom.metrics.k8s.io/v1beta1: the server is currently unable to handle the request, custom.metrics.k8s.io/v1beta2: the server is currently unable to handle the request, external.metrics.k8s.io/v1beta1: the server is currently unable to handle the request\",\"reason\":\"DiscoveryFailed\",\"status\":\"True\",\"type\":\"NamespaceDeletionDiscoveryFailure\"},{\"lastTransitionTime\":\"2022-12-22T01:24:56Z\",\"message\":\"All legacy kube types successfully parsed\",\"reason\":\"ParsedGroupVersions\",\"status\":\"False\",\"type\":\"NamespaceDeletionGroupVersionParsingFailure\"},{\"lastTransitionTime\":\"2022-12-27T08:24:29Z\",\"message\":\"All content successfully deleted, may be waiting on finalization\",\"reason\":\"ContentDeleted\",\"status\":\"False\",\"type\":\"NamespaceDeletionContentFailure\"},{\"lastTransitionTime\":\"2022-12-27T08:24:29Z\",\"message\":\"All content successfully removed\",\"reason\":\"ContentRemoved\",\"status\":\"False\",\"type\":\"NamespaceContentRemaining\"},{\"lastTransitionTime\":\"2022-12-22T01:24:56Z\",\"message\":\"All content-preserving finalizers finished\",\"reason\":\"ContentHasNoFinalizers\",\"status\":\"False\",\"type\":\"NamespaceFinalizersRemaining\"}],\"phase\":\"Terminating\"}}\n"
+        },
+        "creationTimestamp": "2022-12-14T10:30:01Z",
+        "deletionTimestamp": "2022-12-22T01:24:50Z",
+        "labels": {
+            "kubernetes.io/metadata.name": "tema14"
+        },
+        "name": "tema14",
+        "resourceVersion": "6217594",
+        "uid": "a2e92992-e0fd-4c4e-bcf7-3237fa594f2f"
+    },
+    "spec": {
+        "finalizers": []
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2022-12-22T01:24:55Z",
+                "message": "Discovery failed for some groups, 3 failing: unable to retrieve the complete list of server APIs: custom.metrics.k8s.io/v1beta1: the server is currently unable to handle the request, custom.metrics.k8s.io/v1beta2: the server is currently unable to handle the request, external.metrics.k8s.io/v1beta1: the server is currently unable to handle the request",
+                "reason": "DiscoveryFailed",
+                "status": "True",
+                "type": "NamespaceDeletionDiscoveryFailure"
+            },
+            {
+                "lastTransitionTime": "2022-12-22T01:24:56Z",
+                "message": "All legacy kube types successfully parsed",
+                "reason": "ParsedGroupVersions",
+                "status": "False",
+                "type": "NamespaceDeletionGroupVersionParsingFailure"
+            },
+            {
+                "lastTransitionTime": "2022-12-27T08:24:29Z",
+                "message": "All content successfully deleted, may be waiting on finalization",
+                "reason": "ContentDeleted",
+                "status": "False",
+                "type": "NamespaceDeletionContentFailure"
+            },
+            {
+                "lastTransitionTime": "2022-12-27T08:24:29Z",
+                "message": "All content successfully removed",
+                "reason": "ContentRemoved",
+                "status": "False",
+                "type": "NamespaceContentRemaining"
+            },
+            {
+                "lastTransitionTime": "2022-12-22T01:24:56Z",
+                "message": "All content-preserving finalizers finished",
+                "reason": "ContentHasNoFinalizers",
+                "status": "False",
+                "type": "NamespaceFinalizersRemaining"
+            }
+        ],
+        "phase": "Terminating"
+    }
+}

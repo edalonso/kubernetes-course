@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: request-duration
+spec:
+  args:
+  - name: ingress
+  - name: rollout-service
+  - name: rollout-namespace
+  metrics:
+  - name: request-duration
+    interval: 10s
+    successCondition: result[0] > 0.90
+    provider:
+      prometheus:
+        address: http://prometheus-operator-prometheus.prometheus-operator:9090
+        query: >+
+          histogram_quantile(
+                0.99,
+                sum(
+                        rate(
+                                nginx_ingress_controller_request_duration_seconds_bucket{
+                                        ingress="{{args.ingress}}",
+                                        service="{{args.rollout-service}}",
+                                        namespace="{{args.rollout-namespace}}"
+                                }[{{ interval }}]
+                        )
+                ) by (le)
+          )

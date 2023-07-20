@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imagina-nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - mountPath: /cache
+      name: app-volume
+  - name: nginx2
+    image: nginx
+    command: ["/bin/sh","-c"]
+    args: ["sed -i 's/listen  .*/listen 81;/g' /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - mountPath: /tmp
+      name: app-volume
+  volumes:
+  - name: app-volume
+    persistentVolumeClaim:
+      claimName: nginx-nfs-pvc

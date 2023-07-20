@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-test
+  labels:
+    environment: production
+    tier: frontend
+spec:
+  containers:
+    - name: node-test
+      image: "nginx:1.21"
+      resources:
+        limits:
+          cpu: 1
+  nodeSelector:
+    kubernetes.io/hostname: worker2

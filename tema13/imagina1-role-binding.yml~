@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: imagina1
+subjects:
+- kind: User
+  name: imagina1
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: imagina1
+  apiGroup: ""

@@ -1,0 +1,16 @@
+==== START logs for container metrics-server of pod kube-system/metrics-server-696f4844bb-msdkr ====
+I1115 01:07:27.922270       1 serving.go:342] Generated self-signed cert (/tmp/apiserver.crt, /tmp/apiserver.key)
+I1115 01:07:28.886325       1 secure_serving.go:266] Serving securely on [::]:4443
+I1115 01:07:28.886419       1 requestheader_controller.go:169] Starting RequestHeaderAuthRequestController
+I1115 01:07:28.886434       1 shared_informer.go:240] Waiting for caches to sync for RequestHeaderAuthRequestController
+I1115 01:07:28.886473       1 dynamic_serving_content.go:131] "Starting controller" name="serving-cert::/tmp/apiserver.crt::/tmp/apiserver.key"
+W1115 01:07:28.887546       1 shared_informer.go:372] The sharedIndexInformer has started, run more than once is not allowed
+I1115 01:07:28.887708       1 tlsconfig.go:240] "Starting DynamicServingCertificateController"
+I1115 01:07:28.888065       1 configmap_cafile_content.go:201] "Starting controller" name="client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file"
+I1115 01:07:28.888197       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file
+I1115 01:07:28.888412       1 configmap_cafile_content.go:201] "Starting controller" name="client-ca::kube-system::extension-apiserver-authentication::client-ca-file"
+I1115 01:07:28.888539       1 shared_informer.go:240] Waiting for caches to sync for client-ca::kube-system::extension-apiserver-authentication::client-ca-file
+I1115 01:07:28.987044       1 shared_informer.go:247] Caches are synced for RequestHeaderAuthRequestController 
+I1115 01:07:28.992147       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::client-ca-file 
+I1115 01:07:28.992177       1 shared_informer.go:247] Caches are synced for client-ca::kube-system::extension-apiserver-authentication::requestheader-client-ca-file 
+==== END logs for container metrics-server of pod kube-system/metrics-server-696f4844bb-msdkr ====

@@ -1,0 +1,29 @@
+apiVersion: instance.civo.crossplane.io/v1alpha1
+kind: CivoInstance
+metadata:
+  name: imagina-crossplane-instance
+spec:
+  instanceConfig:
+    diskImage: ubuntu-focal
+    region: LON1
+    size: g3.small
+    hostname: imaginaCrossplaneInstance
+    tags:
+      - crossplane
+      - civo
+      - imagina
+    sshPubKeyRef:
+      namespace: tema19
+      name: ssh-key-secret
+      key: ssh-publickey
+  providerConfigRef:
+    name: civo-provider
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ssh-key-secret
+  namespace: tema19
+data:
+  ssh-publickey: c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCQVFEVXZOWFVYdFl4Ni9JbHRKVXZ2djdBREQyMEJYOVFWNG4rODVxTmRpck5BQnVXRVM4S0t6VVdWOWJSRXBRWXExUVVQK1FjMXlqNzE5c2haMFd4d1RLRHZnYlJrQTRsbXpSQjg0SmZGUUVSTnRtMWNHN3Y1Q0UvbVBCUlBsR2xWODJkVTNxTFNvUk1JWDNoZTVMWTZ0a0tvR1hmWHBaSitiS3ZNM0FJYitnKy9KZ2F5amlTamxTaDVvV2NiZGhIZFpxcG00dVBqcVdoNmZoZmJ1dUZITWU1ZFArMXhuay9kSnprUGJEbHN3VTJjdkl2M1YvcSttcnp4bXZNeldSYWdIQW5RODBGOWZ1VGhZOVlEMWxrbTg4YUhxa3VwSWtMQkZzL0hYVG1oR0s5M24xa1BudVZiT3EyZUYrMFdjVTJ4WGRrbjUySEx1eVczckQwVmt5UUxLZTUgcGFzc3dvcmQgcGFyYSBjb25lY3RhciBhcmdvY2QgY29uIGdpdA==
+type: Opaque

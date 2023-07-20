@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: backend
+  labels:
+    app: wordpress
+    tier: backend
+    env: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: backend
+      app: wordpress
+      env: prod
+  template:
+    metadata:
+      labels:
+        tier: backend
+        app: wordpress
+        env: prod
+    spec:
+      containers:
+      - name: wordpress
+        image: wordpress
+        ports:
+        - containerPort: 80
+

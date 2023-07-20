@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: tema19
+  name: civo-provider-secret
+type: Opaque
+data:
+  credentials: aHJuVURQOG82MURMVVVqT3BTY1pDTDZNRjZIR0dUSmNEclViT3NaRGpxcGxhZGtqc2Y4Nzkwdwo=
+---
+apiVersion: civo.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: civo-provider
+spec:
+  region: fra1
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: tema19
+      name: civo-provider-secret
+      key: credentials

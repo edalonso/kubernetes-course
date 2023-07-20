@@ -1,0 +1,210 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook-create-ci-open-merge-main
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  dependencies:
+    - name: create-ci
+      eventSourceName: webhook
+      eventName: create-ci
+      filters:
+        data:
+          - path: body.event_type
+            type: string
+            value:
+              - "merge_request"
+          - path: body.object_attributes.action
+            type: string
+            value:
+              - "open"
+          - path: body.object_attributes.target_branch
+            type: string
+            value:
+              - "main"
+  triggers:
+    - template:
+        name: webhook-create-ci-workflow-trigger
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: merge-verify-
+                labels:
+                  repo: repo-name
+                  env: pre
+              spec:
+                entrypoint: full-ci-management
+                serviceAccountName: workflow
+                volumes:
+                - name: gitlab-argo-pull-dev
+                  secret:
+                    secretName: gitlab-argo-pull-dev
+                - name: gitlab-argo-push-dev
+                  secret:
+                    secretName: gitlab-argo-push-dev
+                - name: kaniko-secret-dev
+                  secret:
+                    secretName: regcred
+                    items:
+                      - key: .dockerconfigjson
+                        path: config.json
+                - name: work
+                  persistentVolumeClaim:
+                    claimName: argo-workflow-pvc
+                imagePullSecrets:
+                - name: regcred
+                arguments:
+                  parameters:
+                  - name: message
+                    value: hello world
+                  - name: git_url
+                    value: git
+                  - name: source_branch
+                    value: develop
+                  - name: uniq_string
+                    value: test
+                templates:
+                - name: full-ci-management
+                  inputs:
+                    parameters:
+                    - name: message
+                    - name: git_url
+                    - name: source_branch
+                    - name: uniq_string
+                  dag:
+                    tasks:
+                    - name: generate-uid
+                      templateRef:
+                        name: ci-workflow
+                        template: uid
+                      arguments:
+                        parameters:
+                        - name: globaluid
+                          value: my-uid
+                    - name: get-secrets
+                      templateRef:
+                        name: ci-workflow
+                        template: get-secret
+                    - name: checkout-git-repository
+                      templateRef:
+                        name: ci-workflow
+                        template: git-clone
+                      arguments:
+                        parameters:
+                        - name: repo_token_name
+                          value: argo-workflow
+                        - name: repo_token_value
+                          value: "{{ tasks.get-secrets.outputs.parameters.pass-pull }}"
+                        - name: repo
+                          value: "{{ inputs.parameters.git_url }}"
+                        - name: branch
+                          value: "{{ inputs.parameters.source_branch }}"
+                        - name: body
+                          value: "{{ inputs.parameters.message }}"
+                        - name: working_dir
+                          value: "{{ tasks.generate-uid.outputs.parameters.uid }}/repo"
+                      depends: generate-uid.Succeeded && get-secrets.Succeeded
+                    - name: checkout-template-repository
+                      templateRef:
+                        name: ci-workflow
+                        template: git-clone
+                      arguments:
+                        parameters:
+                        - name: repo_token_name
+                          value: argo-workflow
+                        - name: repo_token_value
+                          value: "{{ tasks.get-secrets.outputs.parameters.pass-pull }}"
+                        - name: repo
+                          value: "git.dsboxlab.com/desarrollo/sistemas/devops2/templates.git"
+                        - name: branch
+                          value: "main"
+                        - name: body
+                          value: "{{ inputs.parameters.message }}"
+                        - name: working_dir
+                          value: "{{ tasks.generate-uid.outputs.parameters.uid }}/templates"
+                      depends: generate-uid.Succeeded && get-secrets.Succeeded
+                    - name: get-app-info
+                      templateRef:
+                        name: ci-workflow
+                        template: get-app-info
+                      arguments:
+                        parameters:
+                        - name: working_dir
+                          value: "{{ tasks.generate-uid.outputs.parameters.uid }}/repo"
+                        - name: environment
+                          value: dev
+                      depends: "checkout-git-repository.Succeeded"
+                    - name: copy-template-dockerfile-java
+                      templateRef:
+                        name: ci-workflow
+                        template: exec-command
+                      arguments:
+                        parameters:
+                        - name: exec_command
+                          value: "mv /work/{{ tasks.generate-uid.outputs.parameters.uid }}/templates/Dockerfiles/javaMaven /work/{{ tasks.generate-uid.output\
+s.parameters.uid }}/repo/code/Dockerfile"
+                      depends: checkout-template-repository.Succeeded && checkout-git-repository.Succeeded && get-app-info.Succeeded
+                      when: "{{ tasks.get-app-info.outputs.parameters.kind-app }} == AppJavaClaim"
+                    - name: compile-app
+                      templateRef:
+                        name: ci-workflow
+                        template: verify-image
+                      arguments:
+                        parameters:
+                        - name: registry_credentials
+                          value: kaniko-secret-dev
+                        - name: context_subpath
+                          value: "/{{ tasks.generate-uid.outputs.parameters.uid }}/repo/code/"
+                        - name: stage
+                          value: build
+                      depends: "checkout-git-repository.Succeeded && copy-template-dockerfile-java.Succeeded"
+                    - name: clean-workspace
+                      templateRef:
+                        name: ci-workflow
+                        template: exec-command
+                      arguments:
+                        parameters:
+                        - name: exec_command
+                          value: "mv /work/{{ tasks.generate-uid.outputs.parameters.uid }} /tmp/"
+                      depends: compile-app.Succeeded || compile-app.Failed
+          parameters:
+            - src:
+                dependencyName: create-ci
+                dataKey: body
+              dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: create-ci
+                dataTemplate: '{{ .Input.body.project.http_url | substr 8 300 }}'
+              dest: spec.arguments.parameters.1.value
+            - src:
+                dependencyName: create-ci
+                dataKey: body.object_attributes.source_branch
+              dest: spec.arguments.parameters.2.value
+            - src:
+                dependencyName: create-ci
+                dataKey: body.object_attributes.last_commit.id
+              dest: spec.arguments.parameters.3.value
+            - src:
+                dependencyName: create-ci
+                dataTemplate: 'from-{{ .Input.body.object_attributes.source_branch | replace " " "-" | replace "/" "-" | lower }}-'
+              dest: metadata.generateName
+              operation: append
+            - src:
+                dependencyName: create-ci
+                dataTemplate: 'to-{{ .Input.body.object_attributes.target_branch | replace " " "-" | lower }}-'
+              dest: metadata.generateName
+              operation: append
+            - src:
+                dependencyName: create-ci
+                dataTemplate: '{{ (splitList "/" .Input.body.project.path_with_namespace) | last }}-'
+              dest: metadata.generateName
+              operation: append
+            - src:
+                dependencyName: create-ci
+                dataTemplate: '{{ (splitList "/" .Input.body.project.path_with_namespace) | last }}'
+              dest: metadata.labels.repo

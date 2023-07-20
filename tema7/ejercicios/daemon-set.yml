@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: imagina-nginx-ds
+  namespace: tema7
+  labels:
+    app: ds-imagina
+spec:
+  selector:
+    matchLabels:
+      app: ds-imagina
+  template:
+    metadata:
+      labels:
+        app: ds-imagina
+    spec:
+      containers:
+      - name: nginx
+        image: nginx 
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "100m"
+            memory: "50Mi"
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log/pods
+      volumes:
+      - name: logs
+        hostPath:
+          path: /var/log/pods
+

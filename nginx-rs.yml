@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-rs
+    tier: frontend
+  name: nginx-rs
+spec:
+  containers:
+  - image: nginx:1.21
+    name: nginx-rs
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

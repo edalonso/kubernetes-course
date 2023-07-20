@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imagina-deploy-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagina-deploy-2
+  template:
+    metadata:
+      labels:
+        app: imagina-deploy-2
+    spec:
+      schedulerName: imagina-scheduler
+      containers:
+      - name: imagina-deploy-2
+        image: nginx:latest
+        ports:
+        - containerPort: 80

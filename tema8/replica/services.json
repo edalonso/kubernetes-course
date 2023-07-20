@@ -1,0 +1,85 @@
+{
+    "kind": "ServiceList",
+    "apiVersion": "v1",
+    "metadata": {
+        "resourceVersion": "4239931"
+    },
+    "items": [
+        {
+            "metadata": {
+                "name": "mi-servicio",
+                "namespace": "replica",
+                "uid": "71faed62-a8d1-4bb9-b2a1-6def5974acda",
+                "resourceVersion": "445825",
+                "creationTimestamp": "2022-10-21T01:50:22Z",
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"mi-servicio\",\"namespace\":\"replica\"},\"spec\":{\"ports\":[{\"port\":80,\"protocol\":\"TCP\",\"targetPort\":9376}],\"selector\":{\"app\":\"mi-enrutador\"}}}\n"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "protocol": "TCP",
+                        "port": 80,
+                        "targetPort": 9376
+                    }
+                ],
+                "selector": {
+                    "app": "mi-enrutador"
+                },
+                "clusterIP": "10.103.223.244",
+                "clusterIPs": [
+                    "10.103.223.244"
+                ],
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
+                "ipFamilies": [
+                    "IPv4"
+                ],
+                "ipFamilyPolicy": "SingleStack",
+                "internalTrafficPolicy": "Cluster"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "metadata": {
+                "name": "mi-servicio-rs",
+                "namespace": "replica",
+                "uid": "ad6ba971-a158-4cfb-8c88-642483a7a2aa",
+                "resourceVersion": "839490",
+                "creationTimestamp": "2022-10-21T01:50:26Z",
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"mi-servicio-rs\",\"namespace\":\"replica\"},\"spec\":{\"ports\":[{\"port\":80,\"protocol\":\"TCP\",\"targetPort\":5000}],\"selector\":{\"tier\":\"frontend\"}}}\n"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "protocol": "TCP",
+                        "port": 80,
+                        "targetPort": 5000
+                    }
+                ],
+                "selector": {
+                    "tier": "frontend"
+                },
+                "clusterIP": "10.102.217.136",
+                "clusterIPs": [
+                    "10.102.217.136"
+                ],
+                "type": "ClusterIP",
+                "sessionAffinity": "None",
+                "ipFamilies": [
+                    "IPv4"
+                ],
+                "ipFamilyPolicy": "SingleStack",
+                "internalTrafficPolicy": "Cluster"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ]
+}

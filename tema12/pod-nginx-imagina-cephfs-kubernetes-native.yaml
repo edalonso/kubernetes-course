@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imagina-nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - mountPath: /cache
+      name: app-volume
+  - name: nginx2
+    image: nginx
+    command: ["/bin/sh","-c"]
+    args: ["sed -i 's/listen  .*/listen 81;/g' /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - mountPath: /tmp
+      name: app-volume
+  volumes:
+  - name: app-volume
+    cephfs:
+      monitors:
+      - "192.168.1.144:31789"
+      - "192.168.1.145:31422"
+      - "192.168.1.146:31666"
+      user: admin
+      secretFile: "/etc/ceph/user.secret"
+      #secretRef:
+      #  name: ceph-secret
+      readOnly: false

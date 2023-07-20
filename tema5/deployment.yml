@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: imagina-world
+  name: imagina-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagina-world
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: imagina-world
+    spec:
+      containers:
+      - image: nginx:1.21
+        imagePullPolicy: Always
+        name: imagina-world
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+        ports:
+        - containerPort: 80
+          protocol: TCP

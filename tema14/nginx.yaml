@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: imagina-nginx
+  name: imagina-nginx
+spec:  
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagina-nginx
+  template:
+    metadata:
+      labels:
+        app: imagina-nginx
+    spec: 
+      containers:
+        - name: imagina-nginx
+          image: nginx:1.21

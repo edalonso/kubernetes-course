@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: imagina-nginx
+  name: imagina-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imagina-nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: imagina-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /cache
+          name: app-volume
+      - name: nginx2
+        image: nginx
+        command: ["/bin/sh","-c"]
+        args: ["sed -i 's/listen  .*/listen 81;/g' /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - mountPath: /tmp
+          name: app-volume
+      volumes:
+      - name: app-volume
+        hostPath:
+            path: /tmp/

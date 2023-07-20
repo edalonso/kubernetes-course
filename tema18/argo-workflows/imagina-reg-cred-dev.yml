@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJrOHMuZHNib3hsYWIuY29tIjp7InVzZXJuYW1lIjoidGVzdCIsInBhc3N3b3JkIjoiMTIzIiwiZW1haWwiOiJlZHVhcmRvLmFsb25zb0BkaXNhc2hvcC5jb20iLCJhdXRoIjoiZEdWemREb3hNak09In19fQ==
+kind: Secret
+metadata:
+  name: docker-edu-secret
+  namespace: argo-events
+type: kubernetes.io/dockerconfigjson

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend-2
+  labels:
+    app: wordpress-2
+    tier: frontend
+    env: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+      app: wordpress-2
+      env: dev
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        app: wordpress-2
+        env: dev
+    spec:
+      containers:
+      - name: wordpress-2
+        image: wordpress
+        ports:
+        - containerPort: 80
+

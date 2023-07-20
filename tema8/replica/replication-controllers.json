@@ -1,0 +1,70 @@
+{
+    "kind": "ReplicationControllerList",
+    "apiVersion": "v1",
+    "metadata": {
+        "resourceVersion": "4239931"
+    },
+    "items": [
+        {
+            "metadata": {
+                "name": "mi-enrutador",
+                "namespace": "replica",
+                "uid": "c602e90b-1459-4384-9f66-6519afb5331c",
+                "resourceVersion": "4037427",
+                "generation": 1,
+                "creationTimestamp": "2022-10-21T01:08:15Z",
+                "labels": {
+                    "app": "mi-enrutador"
+                },
+                "annotations": {
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"ReplicationController\",\"metadata\":{\"annotations\":{},\"name\":\"mi-enrutador\",\"namespace\":\"replica\"},\"spec\":{\"replicas\":3,\"selector\":{\"app\":\"mi-enrutador\"},\"template\":{\"metadata\":{\"labels\":{\"app\":\"mi-enrutador\"},\"name\":\"mi-enrutador\"},\"spec\":{\"containers\":[{\"image\":\"nginx:1.21\",\"name\":\"enrutador\",\"ports\":[{\"containerPort\":80}]}]}}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 3,
+                "selector": {
+                    "app": "mi-enrutador"
+                },
+                "template": {
+                    "metadata": {
+                        "name": "mi-enrutador",
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "mi-enrutador"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "enrutador",
+                                "image": "nginx:1.21",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "replicas": 3,
+                "fullyLabeledReplicas": 3,
+                "readyReplicas": 3,
+                "availableReplicas": 3,
+                "observedGeneration": 1
+            }
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  repo_token_name: YXJnby13b3JrZmxvdw==
+  repo_token_value: Z2xwYXQtQmNSSkZOc3pIR29TWDNYbXN2WUI=
+kind: Secret
+metadata:
+  name: gitlab-argo-pull-dev
+  namespace: argo-events
+type: Opaque

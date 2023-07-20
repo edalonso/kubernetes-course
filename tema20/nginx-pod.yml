@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  runtimeClassName: gvisor
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: runtime.kubernetes.io
+            operator: In
+            values:
+            - runsc
+  containers:
+  - image: nginx
+    name: nginx

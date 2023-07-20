@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imagina-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: imagina-geo-redundancy
+  template:
+    metadata:
+      labels:
+        component: imagina-geo-redundancy
+    spec:
+      containers:
+      - name: imagina-geo-redundancy
+        image: "nginx"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: component
+                  operator: In
+                  values:
+                  - imagina-geo-redundancy
+              topologyKey: topology.kubernetes.io/zone
+            weight: 100

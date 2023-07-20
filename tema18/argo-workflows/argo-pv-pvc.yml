@@ -1,0 +1,42 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: storage-argo-workflow
+provisioner: k8s.imagina.io/storage-argo-workflow
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: argo-workflow-pv
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 2Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: argo-workflow-pvc
+    namespace: argo
+  hostPath:
+    path: "/tmp/"
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: storage-argo-workflow
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: argo-workflow-pvc
+  namespace: argo
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: storage-argo-workflow
+  volumeMode: Filesystem
+  volumeName: argo-workflow-pv

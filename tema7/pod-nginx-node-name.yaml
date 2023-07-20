@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imagin-nginx-nodename
+spec:
+  nodeName: worker2
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent

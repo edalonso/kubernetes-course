@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: imagina-istio-virtual-svc
+spec:
+  gateways:
+  - istio-rollout-gateway
+  hosts:
+  - istio-rollout.imagina.k8s.io
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: servicio-estable
+      weight: 100
+    - destination:
+        host: servicio-canary
+      weight: 0
+

@@ -1,0 +1,26 @@
+==== START logs for container kube-proxy of pod kube-system/kube-proxy-zl2tw ====
+I1115 00:28:34.553671       1 node.go:163] Successfully retrieved node IP: 192.168.1.142
+I1115 00:28:34.553886       1 server_others.go:138] "Detected node IP" address="192.168.1.142"
+I1115 00:28:34.553940       1 server_others.go:578] "Unknown proxy mode, assuming iptables proxy" proxyMode=""
+I1115 00:28:34.580572       1 server_others.go:206] "Using iptables Proxier"
+I1115 00:28:34.580764       1 server_others.go:213] "kube-proxy running in dual-stack mode" ipFamily=IPv4
+I1115 00:28:34.580780       1 server_others.go:214] "Creating dualStackProxier for iptables"
+I1115 00:28:34.580882       1 server_others.go:501] "Detect-local-mode set to ClusterCIDR, but no IPv6 cluster CIDR defined, , defaulting to no-op detect-local for IPv6"
+I1115 00:28:34.581948       1 proxier.go:262] "Setting route_localnet=1, use nodePortAddresses to filter loopback addresses for NodePorts to skip it https://issues.k8s.io/90259"
+I1115 00:28:34.583201       1 proxier.go:262] "Setting route_localnet=1, use nodePortAddresses to filter loopback addresses for NodePorts to skip it https://issues.k8s.io/90259"
+I1115 00:28:34.583438       1 server.go:661] "Version info" version="v1.25.2"
+I1115 00:28:34.583458       1 server.go:663] "Golang settings" GOGC="" GOMAXPROCS="" GOTRACEBACK=""
+I1115 00:28:34.590618       1 conntrack.go:100] "Set sysctl" entry="net/netfilter/nf_conntrack_max" value=131072
+I1115 00:28:34.590888       1 conntrack.go:52] "Setting nf_conntrack_max" nf_conntrack_max=131072
+I1115 00:28:34.592565       1 conntrack.go:83] "Setting conntrack hashsize" conntrack hashsize=32768
+I1115 00:28:34.612476       1 conntrack.go:100] "Set sysctl" entry="net/netfilter/nf_conntrack_tcp_timeout_close_wait" value=3600
+I1115 00:28:34.613852       1 config.go:317] "Starting service config controller"
+I1115 00:28:34.613881       1 shared_informer.go:255] Waiting for caches to sync for service config
+I1115 00:28:34.614141       1 config.go:444] "Starting node config controller"
+I1115 00:28:34.614151       1 shared_informer.go:255] Waiting for caches to sync for node config
+I1115 00:28:34.615669       1 config.go:226] "Starting endpoint slice config controller"
+I1115 00:28:34.615686       1 shared_informer.go:255] Waiting for caches to sync for endpoint slice config
+I1115 00:28:34.714462       1 shared_informer.go:262] Caches are synced for node config
+I1115 00:28:34.714497       1 shared_informer.go:262] Caches are synced for service config
+I1115 00:28:34.716791       1 shared_informer.go:262] Caches are synced for endpoint slice config
+==== END logs for container kube-proxy of pod kube-system/kube-proxy-zl2tw ====

@@ -1,0 +1,60 @@
+apiVersion: v1
+data:
+  prometheus.yml: "global:\n  scrape_interval: 5s\n  evaluation_interval: 5s\nalerting:\n
+    \ alertmanagers:\n  - scheme: http\n    static_configs:\n    - targets:\n      -
+    \"alertmanager.monitoring.svc:9093\"\nscrape_configs:\n  - job_name: 'node-exporter'\n
+    \   kubernetes_sd_configs:\n      - role: endpoints\n    relabel_configs:\n    -
+    source_labels: [__meta_kubernetes_endpoints_name]\n      regex: 'node-exporter'\n
+    \     action: keep\n  \n  - job_name: 'kubernetes-apiservers'\n\n    kubernetes_sd_configs:\n
+    \   - role: endpoints\n    scheme: https\n\n    tls_config:\n      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n
+    \   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n
+    \   relabel_configs:\n    - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name,
+    __meta_kubernetes_endpoint_port_name]\n      action: keep\n      regex: default;kubernetes;https\n\n
+    \ - job_name: 'kubernetes-nodes'\n\n    scheme: https\n\n    tls_config:\n      ca_file:
+    /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n
+    \   kubernetes_sd_configs:\n    - role: node\n\n    relabel_configs:\n    - action:
+    labelmap\n      regex: __meta_kubernetes_node_label_(.+)\n    - target_label:
+    __address__\n      replacement: kubernetes.default.svc:443\n    - source_labels:
+    [__meta_kubernetes_node_name]\n      regex: (.+)\n      target_label: __metrics_path__\n
+    \     replacement: /api/v1/nodes/${1}/proxy/metrics     \n  \n  - job_name: 'kubernetes-pods'\n\n
+    \   metric_relabel_configs:\n    - action: drop\n      source_labels: [__name__]\n
+    \     regex: istio_agent_.*|istiod_.*|istio_build|citadel_.*|galley_.*|pilot_[^p].*|envoy_cluster_[^u].*|envoy_cluster_update.*|envoy_listener_[^dh].*|envoy_server_[^mu].*|envoy_wasm_.*\n
+    \   - action: labeldrop\n      regex: chart|destination_app|destination_version|heritage|.*operator.*|istio.*|release|security_istio_io_.*|service_istio_io_.*|sidecar_istio_io_inject|source_app|source_version\n\n
+    \   kubernetes_sd_configs:\n    - role: pod\n\n    relabel_configs:\n    - source_labels:
+    [__meta_kubernetes_pod_annotation_prometheus_io_scrape]\n      action: keep\n
+    \     regex: true\n    - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]\n
+    \     action: replace\n      target_label: __metrics_path__\n      regex: (.+)\n
+    \   - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]\n
+    \     action: replace\n      regex: ([^:]+)(?::\\d+)?;(\\d+)\n      replacement:
+    $1:$2\n      target_label: __address__\n    - action: labelmap\n      regex: __meta_kubernetes_pod_label_(.+)\n
+    \   - source_labels: [__meta_kubernetes_namespace]\n      action: replace\n      target_label:
+    kubernetes_namespace\n    - source_labels: [__meta_kubernetes_pod_name]\n      action:
+    replace\n      target_label: kubernetes_pod_name\n  \n  - job_name: 'kube-state-metrics'\n
+    \   static_configs:\n      - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']\n\n
+    \ - job_name: 'kubernetes-cadvisor'\n\n    scheme: https\n\n    tls_config:\n
+    \     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n    bearer_token_file:
+    /var/run/secrets/kubernetes.io/serviceaccount/token\n\n    kubernetes_sd_configs:\n
+    \   - role: node\n\n    relabel_configs:\n    - action: labelmap\n      regex:
+    __meta_kubernetes_node_label_(.+)\n    - target_label: __address__\n      replacement:
+    kubernetes.default.svc:443\n    - source_labels: [__meta_kubernetes_node_name]\n
+    \     regex: (.+)\n      target_label: __metrics_path__\n      replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor\n
+    \ \n  - job_name: 'kubernetes-service-endpoints'\n\n    kubernetes_sd_configs:\n
+    \   - role: endpoints\n\n    relabel_configs:\n    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]\n
+    \     action: keep\n      regex: true\n    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]\n
+    \     action: replace\n      target_label: __scheme__\n      regex: (https?)\n
+    \   - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]\n
+    \     action: replace\n      target_label: __metrics_path__\n      regex: (.+)\n
+    \   - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]\n
+    \     action: replace\n      target_label: __address__\n      regex: ([^:]+)(?::\\d+)?;(\\d+)\n
+    \     replacement: $1:$2\n    - action: labelmap\n      regex: __meta_kubernetes_service_label_(.+)\n
+    \   - source_labels: [__meta_kubernetes_namespace]\n      action: replace\n      target_label:
+    kubernetes_namespace\n    - source_labels: [__meta_kubernetes_service_name]\n
+    \     action: replace\n      target_label: kubernetes_name\n\n  - job_name: 'ingress-nginx-endpoints'\n
+    \   static_configs:\n    - targets: [\"ingress-nginx-controller.ingress-nginx:10254\"]\n\n
+    \ - job_name: 'mongodb-exporter'\n    static_configs:\n    - targets: [\"mongodb-exporter-service.mongo:9216\"]"
+kind: ConfigMap
+metadata:
+  labels:
+    name: prometheus-server-conf
+  name: prometheus-server-conf
+  namespace: monitoring

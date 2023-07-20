@@ -1,0 +1,14 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: app-backend-imagina
+  annotations:
+    meta.crossplane.io/maintainer: Eduardo Alonso (@edalonso)
+    meta.crossplane.io/description: Fully operational app backend application
+    meta.crossplane.io/readme: A Configuration package that defines a CompositeApp and AppClaim types that can be used to deploy Imagina backend application
+spec:
+  crossplane:
+    version: ">=1.10"
+  dependsOn:
+  - provider: crossplane/provider-kubernetes
+    version: ">=v0.4.1"

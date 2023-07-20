@@ -1,0 +1,18 @@
+apiVersion: imagina.io/v1alpha1
+kind: AppClaim
+metadata:
+  name: imagina-backend
+  labels:
+    app-owner: team-dev
+    platform: onprem
+    environment: dev
+spec:
+  id: imagina-backend
+  compositionSelector:
+    matchLabels:
+      type: backend
+  parameters:
+    namespace: tema19
+    image: nginx:1.21
+    host: www.imagina.io
+    subpath: /dev/imagina/backend
